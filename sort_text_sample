@@ -1,0 +1,40 @@
+"""
+This code is designed to parse a file and count the occurrences of email addresses that appear after the "From " line in the file. Here's a step-by-step explanation of what the code does:
+
+It prompts the user to enter a file name. If the user doesn't enter a name, it defaults to "mbox-short.txt".
+It opens the specified file for reading.
+It initializes an empty dictionary called count to store the email addresses and their corresponding counts.
+It reads through each line of the file:
+If the line doesn't start with "From ", it skips to the next line.
+If the line starts with "From ", it splits the line into words and extracts the second word (which is the email address).
+It then updates the count of this email address in the count dictionary.
+After processing all lines, it initializes two variables, bigcount and bigword, to keep track of the most frequent email address and its count.
+It iterates through the count dictionary to find the email address with the highest count.
+Finally, it prints the most frequent email address and its count.
+In summary, this code identifies and counts the most frequent email address in a file where each relevant line starts with "From ".
+"""
+#code to help parse a file. Code example from free Coursera class, "Python for Everybody."
+
+name = input("Enter file:")
+if len(name) < 1:
+    name = "mbox-short.txt"
+handle = open(name)
+
+count = dict()  
+
+for line in handle:
+    if not line.startswith("From "):
+        continue
+    else:
+        words = line.split()
+        w = words[1]  
+        count[w] = count.get(w, 0) + 1
+
+bigcount = None
+bigword = None
+for word, cnt in count.items():
+    if bigcount is None or cnt > bigcount:
+        bigword = word
+        bigcount = cnt
+
+print(bigword, bigcount)
